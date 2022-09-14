@@ -24,6 +24,20 @@ app.get('/call', (req, res) => {
     });
 });
 
+// 유저 회원가입 처리 (post방식, request)
+app.post('/signup-action', (req, res) => {
+    const query = `INSERT INTO USER(user_name, user_email, user_password, created_date) VALUES ( '${req.body.user.userName}','${req.body.user.userEmail}','${req.body.user.userPassword}',NOW())`;
+    connection.query(query, (error) => {
+        // 쿼리 날릴 때 에러 발생하면
+        if(error){
+            console.log("회원가입 처리 에러", error);
+        }else{
+            // 성공 시
+            console.log("회원가입 성공");
+        }
+    })
+})
+
 // 유저 정보 보내기 (post방식, request)
 app.post('/login-action', (req, res) => {
     const email = req.body.email;
@@ -33,9 +47,7 @@ app.post('/login-action', (req, res) => {
         if(error){
             console.log(error);
         }else{
-            console.log("성공적으로 처리되었습니다.");       
-            console.log("이메일 : ",email);
-            console.log("비밀번호 : ", password);
+            console.log("성공적으로 처리되었습니다.");
         }
     });
 });
