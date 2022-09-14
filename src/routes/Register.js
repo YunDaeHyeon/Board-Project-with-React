@@ -48,7 +48,7 @@ function Register() {
                 onReset(e);
                 // e.preventDefault(); // submit 발생 시 reloading 막기
                 alert('회원가입 되었습니다!');
-                const request = await axios.post('http://192.168.35.47:5000/signup-action', {user});
+                const request = await axios.post('http://localhost:5000/signup-action', {user});
                 console.log("요청 데이터 : ",request.data);
             }
         }
@@ -86,7 +86,7 @@ function Register() {
                         <label htmlFor='userEmail'>EMAIL</label>
                         <input
                             id="userEmail"
-                            type="text"
+                            type="email"
                             value={userEmail}
                             onChange={onInputChange}
                         />

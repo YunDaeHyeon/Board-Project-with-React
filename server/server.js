@@ -24,7 +24,27 @@ app.get('/call', (req, res) => {
     });
 });
 
-// 유저 회원가입 처리 (post방식, request)
+// 유저 로그인 처리
+app.post('/login-action', (req, res) => {
+    const email = req.body.email;
+    const password = req.body.pwd;
+    const query = `SELECT user_email, user_password FROM USER WHERE user_email = '${email}' && user_password = '${password}'`;
+    connection.query(query, (error, result) =>{
+        if(error){
+            console.log(error);
+            res.send('error');
+        }else{
+            // 쿼리의 결과는 오브젝트(RowDataPacket)으로 넘어오기에 JSON 형식의 문자열로 파싱
+            if(JSON.stringify(result) == '[]'){ // 쿼리 결과가 '[]'. 즉, 비어있는 오브젝트면 로그인 실패
+                res.send('failure');
+            }else{ // 그렇지 않으면 로그인 성공
+                res.send('success');
+            }
+        }
+    });
+});
+
+// 유저 회원가입 처리
 app.post('/signup-action', (req, res) => {
     const query = `INSERT INTO USER(user_name, user_email, user_password, created_date) VALUES ( '${req.body.user.userName}','${req.body.user.userEmail}','${req.body.user.userPassword}',NOW())`;
     connection.query(query, (error) => {
@@ -37,21 +57,6 @@ app.post('/signup-action', (req, res) => {
         }
     })
 })
-
-// 유저 정보 보내기 (post방식, request)
-app.post('/login-action', (req, res) => {
-    const email = req.body.email;
-    const password = req.body.pwd;
-    let query = `INSERT INTO USER(user_email, user_password, created_date) VALUES ('${email}','${password}', NOW())`;
-    connection.query(query, (error) =>{
-        if(error){
-            console.log(error);
-        }else{
-            console.log("성공적으로 처리되었습니다.");
-        }
-    });
-});
-
 
 app.listen(app.get('port'), () => {
     console.log('포트 넘버 : ' + app.get('port') + "에서 실행 중");

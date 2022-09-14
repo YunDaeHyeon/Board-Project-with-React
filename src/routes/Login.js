@@ -15,15 +15,24 @@ function Login() {
         setPwd(e.target.value);
     }
     const onReset = (e) => {
-        e.preventDefault(); // submit 발생 시 reloading 막기
-        console.log(email, pwd);
         setEmail('');
         setPwd('');
     }
-    const onSaveUserInfo = async(e) => {
-        onReset(e); // Input State 초기화
-        const response = await axios.post('http://172.30.1.27:5000/login-action', { email, pwd });
-        console.log("서버 응답 : ", response.data); // 응답되는 데이터는 response의 data로 받아온다.
+    // 로그인 버튼 클릭 이벤트
+    const onSignInClick = async(e) => {
+        const response = await axios.post('http://localhost:5000/login-action', { email, pwd });
+        onReset(e);
+        // 서버로부터 받아오는 데이터는 data로 받아온다.
+        console.log(response.data);
+        if(response.data === 'success'){
+            alert('로그인 성공');
+        }else if(response.data === 'failure'){
+            e.preventDefault(); //submit 막기
+            alert('로그인 실패');
+        }else if(response.data === 'error'){
+            e.preventDefault(); //submit 막기
+            alert('서버 오류');
+        }
     }
     return (
     <div className="container">
@@ -35,7 +44,7 @@ function Login() {
                         <label htmlFor='userEmail'>EMAIL</label>
                         <input
                             id="userEmail"
-                            type="text"
+                            type="email"
                             onChange={onEmailChage}
                             value={email}
                         />
@@ -51,7 +60,7 @@ function Login() {
                     </div>
                     <button 
                         className='login_btn'
-                        onClick={onSaveUserInfo}>LOGIN
+                        onClick={onSignInClick}>LOGIN
                     </button>
                     <div className='help_container'>
                         <button className='email_search'>이메일 찾기</button>
