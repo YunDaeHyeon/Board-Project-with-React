@@ -1,4 +1,5 @@
 import { useState } from 'react'; 
+import axios from 'axios'; // HTTP 비동기 통신 라이브러리
 import './Login_style.css'
 
 function Login() {
@@ -15,6 +16,11 @@ function Login() {
         console.log(email, pwd);
         setEmail('');
         setPwd('');
+    }
+    const onSaveUserInfo = async(e) => {
+        onReset(e); // Input State 초기화
+        const response = await axios.post('http://172.30.1.27:5000/login-action', { email, pwd });
+        console.log("서버 응답 : ", response.data); // 응답되는 데이터는 response의 data로 받아온다.
     }
     return (
     <div className="container">
@@ -41,7 +47,7 @@ function Login() {
                     </div>
                     <button 
                         className='login_btn'
-                        onClick={onReset}>LOGIN
+                        onClick={onSaveUserInfo}>LOGIN
                     </button>
                 </form>
             </section>
