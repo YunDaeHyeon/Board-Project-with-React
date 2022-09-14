@@ -1,5 +1,8 @@
 import { useState } from 'react'; 
 import axios from 'axios'; // HTTP 비동기 통신 라이브러리
+import {
+    Link
+  } from 'react-router-dom';
 import './Login_style.css'
 
 function Login() {
@@ -27,6 +30,7 @@ function Login() {
         <div className="login_container">
             <section className="login_section">
                 <form className='login_form'>
+                    <h1>로그인</h1>
                     <div className='email'>
                         <label htmlFor='userEmail'>EMAIL</label>
                         <input
@@ -49,6 +53,10 @@ function Login() {
                         className='login_btn'
                         onClick={onSaveUserInfo}>LOGIN
                     </button>
+                    <div className='help_container'>
+                        <button className='email_search'>이메일 찾기</button>
+                        <button className='password_search'>비밀번호 찾기</button>
+                    </div>
                 </form>
             </section>
         </div>
@@ -58,7 +66,9 @@ function Login() {
                     <div className='register_text_container'>
                         <div>
                             <p>Would you like to join?</p>
-                            <button className='register_btn'>SIGN UP</button>
+                            <Link to="/register">
+                                <button className='register_btn'>SIGN UP</button>
+                            </Link>
                         </div>
                     </div>
                 </div>

@@ -32,7 +32,7 @@ input, button{
     font-family: 'Open Sans', Helvetica, Arial, sans-serif;
 }
 
-/* Login 컴포넌트 컨테이너 */
+/* Register 컴포넌트 컨테이너 */
 .container{
     width: 100%;
     height: 100vh;
@@ -41,20 +41,14 @@ input, button{
     background: #f5f5dc;
 }
 
-.login_container{
+/* 회원가입 폼 지정 */
+.register_container{
     width: 100%;
     height: 100vh;
     flex: 1;
 }
 
-.bg_container{
-    width: 100%;
-    height: 100vh;
-    flex: 2;
-}
-
-/* 로그인 폼 지정 */
-.login_section{
+.register_section{
     width: 100%;
     height: 100vh;
     display: flex;
@@ -62,45 +56,13 @@ input, button{
     align-items: center;
 }
 
-.login_form{
+.register_form{
     width: 20vw;
-    height: 20vh;
+    height: 30vh;
     text-align: center;
 }
 
-.login_container section form div.help_container{
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    margin-top: 15px;
-}
-
-.login_container section form div.help_container .email_search{
-    width: 130px;
-    height: 24px;
-    color: #000;
-    font-size: 15px;
-    padding-left: 40px;
-    cursor: pointer;
-    flex: 1;
-}
-
-.login_container section form div.help_container .password_search{
-    width: 130px;
-    height: 24px;
-    padding-right: 40px;
-    text-align: center;
-    color: #000;
-    font-size: 15px;
-    cursor: pointer;
-    flex: 1;
-}
-
-.login_container section form label{
-    color: #ACAC9A;
-}
-
-.login_container section form h1{
+.register_container section form h1{
     position: relative;
     color: #5F5F4F;
     font-size: 34px;
@@ -108,11 +70,17 @@ input, button{
     top: -20%;
 }
 
-.login_container section form .email{
+.register_container section form label{
+    color: #ACAC9A;
+}
+
+.register_container section form .name,
+.register_container section form .email,
+.register_container section form .password{
     margin-bottom: 20px;
 }
 
-.login_container section form .login_btn{
+.register_container section form .register_btn{
     width: 300px;
     height: 34px;
     margin-top: 20px;
@@ -123,7 +91,7 @@ input, button{
     cursor: pointer;
 }
 
-.login_container section form input{
+.register_container section form input{
     display: block;
     width: 100%;
     margin-top: 10px;
@@ -133,8 +101,14 @@ input, button{
     text-align: center;
 }
 
-/* 백그라운드 컨테이너 */
-.bg_section{
+/* 백그라운드 지정 */
+.bg_container{
+    width: 100%;
+    height: 100vh;
+    flex: 2;
+}
+
+.bd_section{
     width: 100%;
     height: 100vh;
     display: flex;
@@ -142,31 +116,31 @@ input, button{
     align-items: center;
 }
 
-.bg_container section .register_container{
+.bg_container section .login_container{
     width: 100%;
     height: 100%;
     text-align: center;
     background-image: url(/src/images/backgroundImage.png);
     background-size: cover;
     position: relative;
-    background-repeat :no-repeat;
+    background-repeat: no-repeat;
 }
 
-.bg_container section .register_container .register_text_container{
+.bg_container section .login_container .login_text_container{
     width: 25vw;
     height: 25vh;
     display: flex;
     justify-content: center;
     align-items: center;
     position: absolute;
-    transform: translate( -50%, -50%);
-    background-color: rgba( 255, 255, 255, 0.8);
     top: 50%;
     left: 50%;
+    background-color: rgba(255, 255, 255, 0.8);
+    transform: translate(-50%, -50%);
     border: 1px solid #8F7245;
 }
 
-.bg_container section .register_container p{
+.bg_container section .login_container p{
     color: #5F5F4F;
     font-size: 30px;
     font-weight: bold;
@@ -174,7 +148,7 @@ input, button{
     margin-bottom: 20px;
 }
 
-.bg_container section .register_container button{
+.bg_container section .login_container button{
     width: 300px;
     height: 34px;
     border-radius: 30px;
@@ -183,10 +157,4 @@ input, button{
     font-size: 15px;
     text-align: center;
     cursor: pointer;
-}
-
-.bg_container section .register_container img{
-    width: 100%;
-    height: 100%;
-    position: relative;
 }
