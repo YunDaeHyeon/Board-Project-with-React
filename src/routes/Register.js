@@ -6,13 +6,13 @@ import './Register_style.css';
 function Register() {
     const [user, setUser] = useState({
         userName : '',
-        userEmail : '',
+        userId : '',
         userPassword : '',
         userPasswordCheck : ''
     });
     // 버튼 클릭 시 input 태그 포커싱을 위해 DOM에 접근할 수 있는 useRef 가져오기
     const passwordInput = useRef();
-    const { userName, userEmail, userPassword, userPasswordCheck } = user; // 비구조화 할당 사용
+    const { userName, userId, userPassword, userPasswordCheck } = user; // 비구조화 할당 사용
     const onInputChange = (e) => {
         const { id, value } = e.target; // e.target에서 입력한 input의 id와 value 추출
         setUser({
@@ -26,14 +26,14 @@ function Register() {
     const onReset = (e) => {
         setUser({
             userName : '',
-            userEmail : '',
+            userId : '',
             userPassword : '',
             userPasswordCheck : ''
         });
     }
     const onSignUpClick = async(e) => {
         // 입력하지 않은 칸이 존재할 경으
-        if(user.userName.length === 0 || user.userEmail.length === 0 || 
+        if(user.userName.length === 0 || user.userId.length === 0 || 
             user.userPassword.length === 0 || user.userPasswordCheck === 0){
             alert('입력하지 않은 칸이 존재합니다!');
             e.preventDefault(); // submit 중단
@@ -82,12 +82,12 @@ function Register() {
                             onChange={onInputChange}
                         />
                     </div>
-                    <div className='email'>
-                        <label htmlFor='userEmail'>EMAIL</label>
+                    <div className='id'>
+                        <label htmlFor='userId'>ID</label>
                         <input
-                            id="userEmail"
-                            type="email"
-                            value={userEmail}
+                            id="userId"
+                            type="text"
+                            value={userId}
                             onChange={onInputChange}
                         />
                     </div>

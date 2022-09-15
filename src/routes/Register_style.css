@@ -75,7 +75,7 @@ input, button{
 }
 
 .register_container section form .name,
-.register_container section form .email,
+.register_container section form .id,
 .register_container section form .password{
     margin-bottom: 20px;
 }

@@ -6,21 +6,21 @@ import {
 import './Login_style.css'
 
 function Login() {
-    const [email, setEmail] = useState('');
+    const [id, setId] = useState('');
     const [pwd, setPwd] = useState('');
-    const onEmailChage = (e) => {
-        setEmail(e.target.value);
+    const onIdChage = (e) => {
+        setId(e.target.value);
     }
     const onPwdChage = (e) => {
         setPwd(e.target.value);
     }
     const onReset = (e) => {
-        setEmail('');
+        setId('');
         setPwd('');
     }
     // 로그인 버튼 클릭 이벤트
     const onSignInClick = async(e) => {
-        const response = await axios.post('http://localhost:5000/login-action', { email, pwd });
+        const response = await axios.post('http://localhost:5000/login-action', { id, pwd });
         onReset(e);
         // 서버로부터 받아오는 데이터는 data로 받아온다.
         console.log(response.data);
@@ -40,13 +40,13 @@ function Login() {
             <section className="login_section">
                 <form className='login_form'>
                     <h1>로그인</h1>
-                    <div className='email'>
-                        <label htmlFor='userEmail'>EMAIL</label>
+                    <div className='id'>
+                        <label htmlFor='userId'>ID</label>
                         <input
-                            id="userEmail"
-                            type="email"
-                            onChange={onEmailChage}
-                            value={email}
+                            id="userID"
+                            type="text"
+                            onChange={onIdChage}
+                            value={id}
                         />
                     </div>
                     <div>
@@ -63,7 +63,7 @@ function Login() {
                         onClick={onSignInClick}>LOGIN
                     </button>
                     <div className='help_container'>
-                        <button className='email_search'>이메일 찾기</button>
+                        <button className='id_search'>아이디 찾기</button>
                         <button className='password_search'>비밀번호 찾기</button>
                     </div>
                 </form>

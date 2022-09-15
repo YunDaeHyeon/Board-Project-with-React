@@ -75,7 +75,7 @@ input, button{
     margin-top: 15px;
 }
 
-.login_container section form div.help_container .email_search{
+.login_container section form div.help_container .id_search{
     width: 130px;
     height: 24px;
     color: #000;
@@ -108,7 +108,7 @@ input, button{
     top: -20%;
 }
 
-.login_container section form .email{
+.login_container section form .id{
     margin-bottom: 20px;
 }
 
