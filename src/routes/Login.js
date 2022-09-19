@@ -26,12 +26,15 @@ function Login() {
         console.log(response.data);
         if(response.data === 'success'){
             alert('로그인 성공');
+            sessionStorage.setItem('user_id', id); // 세션 스토리지 지정
+            // 로그인 성공 시 메인 페이지 이동
+            document.location.href = '/';
         }else if(response.data === 'failure'){
-            e.preventDefault(); //submit 막기
             alert('로그인 실패');
-        }else if(response.data === 'error'){
             e.preventDefault(); //submit 막기
+        }else if(response.data === 'error'){
             alert('서버 오류');
+            e.preventDefault(); //submit 막기
         }
     }
     return (

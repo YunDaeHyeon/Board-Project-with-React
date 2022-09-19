@@ -1,0 +1,26 @@
+.profile_container{
+    width: 15vw;
+	padding: 30px;
+	background-color: #fff;
+    text-align: center;
+	margin: 50px auto; /* 상하 여백 50px, 좌우는 자동 설정 (가운데 정렬) */
+	box-shadow: 10px 10px 30px rgba(0, 0, 0, 0.1);
+	border-radius: 20px;
+}
+
+.profile_container .profile .profile_img{
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+	margin-bottom: 40px;
+    border: 2px solid black;
+}
+
+.profile_container .profile p{
+	font-weight: normal;
+	font-size: 18px;
+	font-family: "arial";
+	line-height: 1;  /* 줄 높이 정하기 */
+	color: #666;
+	margin-bottom: 20px;
+}
