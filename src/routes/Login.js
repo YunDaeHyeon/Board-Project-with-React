@@ -1,11 +1,13 @@
 import { useState } from 'react'; 
 import axios from 'axios'; // HTTP 비동기 통신 라이브러리
 import {
-    Link
+    Link,
+    useNavigate
   } from 'react-router-dom';
 import './Login_style.css'
 
 function Login() {
+    let navigate = useNavigate(); // 사용자 위치 파악
     const [id, setId] = useState('');
     const [pwd, setPwd] = useState('');
     const onIdChage = (e) => {
@@ -14,27 +16,29 @@ function Login() {
     const onPwdChage = (e) => {
         setPwd(e.target.value);
     }
+
     const onReset = (e) => {
         setId('');
         setPwd('');
     }
+
     // 로그인 버튼 클릭 이벤트
     const onSignInClick = async(e) => {
-        const response = await axios.post('http://localhost:5000/login-action', { id, pwd });
-        onReset(e);
-        // 서버로부터 받아오는 데이터는 data로 받아온다.
-        console.log(response.data);
-        if(response.data === 'success'){
-            alert('로그인 성공');
-            sessionStorage.setItem('user_id', id); // 세션 스토리지 지정
-            // 로그인 성공 시 메인 페이지 이동
-            document.location.href = '/';
-        }else if(response.data === 'failure'){
+        e.preventDefault();
+        const response = await axios.post('http://192.168.0.51:5000/login-action', { id, pwd });
+        if(response.data === 'failure'){
             alert('로그인 실패');
-            e.preventDefault(); //submit 막기
+            onReset(e);
         }else if(response.data === 'error'){
             alert('서버 오류');
-            e.preventDefault(); //submit 막기
+            onReset(e);
+        }else if(Object.keys(response.data).length !== 0){
+            alert('로그인 성공');
+            console.log(response.data[0].user_name);
+            sessionStorage.setItem('user', id); // 세션 스토리지 지정
+            onReset(e);
+            // 로그인 성공 시 메인 페이지 이동
+            navigate("/",{replace:true})
         }
     }
     return (

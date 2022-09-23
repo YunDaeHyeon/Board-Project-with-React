@@ -14,21 +14,10 @@ app.use(bodyParser.json());
 
 // routing (매핑)
 
-// 유저 정보 가지오기 (get방식, response)
-app.get('/call', (req, res) => {                  
-  connection.query('SELECT * FROM user', (error, rows) => {  //쿼리문 
-    if (error){
-        console.log(error);
-    }
-    res.send(rows);
-    });
-});
-
-// 유저 로그인 처리
-app.post('/login-action', (req, res) => {
-    const id = req.body.id;
-    const password = req.body.pwd;
-    const query = `SELECT user_id, user_password FROM USER WHERE user_id = '${id}' && user_password = '${password}'`;
+// 유저 인증 처리
+app.get('/auth-action', (req, res) => {                  
+    const id = req.body.userId;
+    const query = `SELECT user_id FROM USER WHERE user_id == '${id}'`;
     connection.query(query, (error, result) =>{
         if(error){
             console.log(error);
@@ -39,6 +28,28 @@ app.post('/login-action', (req, res) => {
                 res.send('failure');
             }else{ // 그렇지 않으면 로그인 성공
                 res.send('success');
+            }
+        }
+    });
+});
+
+// 유저 로그인 처리
+app.post('/login-action', (req, res) => {
+    const id = req.body.id;
+    const password = req.body.pwd;
+    const query = `SELECT user_id, user_name, user_state FROM USER WHERE user_id = '${id}' && user_password = '${password}'`;
+    connection.query(query, (error, result) =>{
+        if(error){
+            console.log(error);
+            res.send('error');
+        }else{
+            // 쿼리의 결과는 오브젝트(RowDataPacket)으로 넘어오기에 JSON 형식의 문자열로 파싱
+            if(Object.keys(result).length !== 0){
+                console.log("로그인 성공");
+                res.send(result);
+            }else{
+                console.log("로그인 실패");
+                res.send('failure');
             }
         }
     });

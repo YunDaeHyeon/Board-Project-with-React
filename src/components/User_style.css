@@ -3,7 +3,7 @@
 	padding: 30px;
 	background-color: #fff;
     text-align: center;
-	margin: 50px auto; /* 상하 여백 50px, 좌우는 자동 설정 (가운데 정렬) */
+	margin: 0px auto; /* 상하 여백 50px, 좌우는 자동 설정 (가운데 정렬) */
 	box-shadow: 10px 10px 30px rgba(0, 0, 0, 0.1);
 	border-radius: 20px;
 }
@@ -24,3 +24,4 @@
 	color: #666;
 	margin-bottom: 20px;
 }
+
