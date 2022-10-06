@@ -1,5 +1,4 @@
 import {
-  BrowserRouter as Router, 
   Routes,
   Route,
 } from "react-router-dom";
@@ -7,6 +6,8 @@ import Login from "./routes/Login";
 import Register from "./routes/Register";
 import Home from "./routes/Home";
 import NotFound from "./components/NotFound";
+import { AuthProvider } from "./authentication/auth";
+import RequireAuth from "./authentication/RequireAuth";
 
 /*
   사용자 인증 없이 접근 가능한 컴포넌트
@@ -17,14 +18,20 @@ import NotFound from "./components/NotFound";
 */
 function App() {
   return (
-    <Router>
+    <AuthProvider>
       <Routes>
+      <Route 
+          path="/" 
+          element={
+            <RequireAuth>
+              <Home/>
+            </RequireAuth>
+            }/>
         <Route path="/login" element={<Login/>}/>
         <Route path="/register" element={<Register/>}/>
-        <Route path="/" element={<Home/>}/>
         <Route path="*" element={<NotFound/>}/>
       </Routes>
-    </Router>
+    </AuthProvider>
   );
 }
 

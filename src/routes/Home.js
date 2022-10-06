@@ -1,20 +1,8 @@
-import { useEffect, useState } from "react";
-import { Navigate } from "react-router-dom";
 import Content from "../components/Content";
 import User from "../components/User";
 import "./Home_style.css";
 
 function Home(){
-    const [user, setUser] = useState("");
-    let session = sessionStorage.getItem(user);
-    useEffect(()=>{
-        if(session != null){
-            setUser(session);
-        }else{
-            alert("로그인을 해주세요!");
-            return <Navigate to="/login" replace={false}/>
-        }
-    }, [user]);
     return (
         <div className="main_container">
         <header>

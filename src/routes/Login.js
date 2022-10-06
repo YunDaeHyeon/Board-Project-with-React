@@ -5,9 +5,11 @@ import {
     useNavigate
   } from 'react-router-dom';
 import './Login_style.css'
+import { useAuth } from '../authentication/auth';
 
 function Login() {
-    let navigate = useNavigate(); // 사용자 위치 파악
+    const { login } = useAuth(); // 권환 제어 커스텀 훅 호출
+    const navigate = useNavigate(); // 사용자 위치 파악
     const [id, setId] = useState('');
     const [pwd, setPwd] = useState('');
     const onIdChage = (e) => {
@@ -25,7 +27,7 @@ function Login() {
     // 로그인 버튼 클릭 이벤트
     const onSignInClick = async(e) => {
         e.preventDefault();
-        const response = await axios.post('http://192.168.0.51:5000/login-action', { id, pwd });
+        const response = await axios.post('http://localhost:5000/login-action', { id, pwd });
         if(response.data === 'failure'){
             alert('로그인 실패');
             onReset(e);
@@ -34,13 +36,12 @@ function Login() {
             onReset(e);
         }else if(Object.keys(response.data).length !== 0){
             alert('로그인 성공');
-            console.log(response.data[0].user_name);
-            sessionStorage.setItem('user', id); // 세션 스토리지 지정
+            login(id);
             onReset(e);
             // 로그인 성공 시 메인 페이지 이동
-            navigate("/",{replace:true})
+            navigate(`/`);
         }
-    }
+    };
     return (
     <div className="container">
         <div className="login_container">
