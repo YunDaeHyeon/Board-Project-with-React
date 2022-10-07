@@ -29,7 +29,7 @@ function Login() {
     // 로그인 버튼 클릭 이벤트
     const onSignInClick = async(e) => {
         e.preventDefault();
-        const response = await axios.post('http://172.30.1.22:5000/login-action', { id, pwd });
+        const response = await axios.post('http://192.168.35.47:5000/login-action', { id, pwd });
         if(response.data === 'failure'){
             alert('로그인 실패');
             idInput.current.focus(); // id input에 포커스 지정
@@ -42,7 +42,7 @@ function Login() {
             login(response.data); // object 형태로 전송
             onReset(e);
             // 로그인 성공 시 메인 페이지 이동
-            navigate(`/`);
+            navigate(`/board`);
         }
     };
     return (

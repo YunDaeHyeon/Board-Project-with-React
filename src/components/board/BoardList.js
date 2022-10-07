@@ -1,8 +1,13 @@
-import "./Content_style.css"
+import { useNavigate } from "react-router-dom";
+import "./BoardList_style.css";
 
-function Content(){
+function BoardList(){
+    const navigate = useNavigate();
+    const onBoardWriteHandler = () =>{
+        navigate('/board/write');
+    };
     return(
-        <div className="dashboard_container">
+        <>
             <section className="dashboard_section">
                 <table className="dashboard_table">
                     <thead>
@@ -43,8 +48,9 @@ function Content(){
                     </tbody>
                 </table>
             </section>
-        </div>
+            <button className="writingButton" onClick={onBoardWriteHandler}>글쓰기</button>
+        </>
     );
 }
 
-export default Content;
+export default BoardList;

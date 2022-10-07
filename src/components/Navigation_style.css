@@ -1,0 +1,19 @@
+/* header - util bar */
+ul.navigation_util_bar{
+    position: absolute;
+    top: 10px;
+    right: 30px;
+}
+
+ul.navigation_util_bar li{
+    margin-right: 20px;
+    cursor: pointer;
+    float: left;
+}
+
+ul.navigation_util_bar li p{
+    display: block;
+    font: 15px/1 "arial";
+    color: #999;
+    padding: 0px 10px;
+}
