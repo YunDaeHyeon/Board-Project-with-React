@@ -5,17 +5,17 @@ const AuthContext = createContext(null);
 
 // 권한 설정 컴포넌트(외부 접근 방지 모듈)
 export const AuthProvider = ({children}) => {
-    const [user, setUser] = useState(null);
+    const [user, setUser] = useState({});
 
     // 로그인
     const login = (user) => {
-        sessionStorage.setItem('user',user); // 세션 저장 { user }
+        sessionStorage.setItem('user',JSON.stringify(user)); // object를 세션으로 저장하기 위해서는 String으로 변환하여 사용
         setUser(user);
     };
 
     // 로그아웃
     const logout = () => {
-        setUser(null);
+        setUser({});
     };
 
     return(

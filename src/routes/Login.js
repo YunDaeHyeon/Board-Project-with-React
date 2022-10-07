@@ -1,4 +1,4 @@
-import { useState } from 'react'; 
+import { useRef, useState } from 'react'; 
 import axios from 'axios'; // HTTP 비동기 통신 라이브러리
 import {
     Link,
@@ -12,6 +12,8 @@ function Login() {
     const navigate = useNavigate(); // 사용자 위치 파악
     const [id, setId] = useState('');
     const [pwd, setPwd] = useState('');
+    // input 태그 포커싱을 위한 DOM 접근 훅 호출
+    const idInput = useRef();
     const onIdChage = (e) => {
         setId(e.target.value);
     }
@@ -27,16 +29,17 @@ function Login() {
     // 로그인 버튼 클릭 이벤트
     const onSignInClick = async(e) => {
         e.preventDefault();
-        const response = await axios.post('http://localhost:5000/login-action', { id, pwd });
+        const response = await axios.post('http://172.30.1.22:5000/login-action', { id, pwd });
         if(response.data === 'failure'){
             alert('로그인 실패');
+            idInput.current.focus(); // id input에 포커스 지정
             onReset(e);
         }else if(response.data === 'error'){
             alert('서버 오류');
             onReset(e);
         }else if(Object.keys(response.data).length !== 0){
             alert('로그인 성공');
-            login(id);
+            login(response.data); // object 형태로 전송
             onReset(e);
             // 로그인 성공 시 메인 페이지 이동
             navigate(`/`);
@@ -55,6 +58,7 @@ function Login() {
                             type="text"
                             onChange={onIdChage}
                             value={id}
+                            ref={idInput} // 로그인 실패 시 포커싱 지정
                         />
                     </div>
                     <div>

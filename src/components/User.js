@@ -1,6 +1,7 @@
 import "./User_style.css"
+import PropTypes from 'prop-types';
 
-function User(){
+function User({userName, userId, userRole}){
     return(
         <div className="profile_container">
             <article className="profile">
@@ -9,12 +10,20 @@ function User(){
                     src={require("../images/user.png")}
                     alt="프로필 이미지"
                     />
-                <p>사용자 이름</p>
-                <p>사용자 아이디</p>
-                <p>사용자 권한</p>
+                <p>{userName}</p>
+                <p>{userId}</p>
+                <p>{userRole}</p>
             </article>
         </div>
     );
 }
+
+// prop type 검사를 위한 'prop-types' 패키지 사용
+// npm install prop-types
+User.propTypes={
+    userName: PropTypes.string.isRequired,
+    userId: PropTypes.string.isRequired,
+    userRole: PropTypes.string.isRequired
+};
 
 export default User;

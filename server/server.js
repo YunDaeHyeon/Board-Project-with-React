@@ -37,7 +37,7 @@ app.get('/auth-action', (req, res) => {
 app.post('/login-action', (req, res) => {
     const id = req.body.id;
     const password = req.body.pwd;
-    const query = `SELECT user_id, user_name, user_state FROM USER WHERE user_id = '${id}' && user_password = '${password}'`;
+    const query = `SELECT user_id, user_name, user_role FROM USER WHERE user_id = '${id}' && user_password = '${password}'`;
     connection.query(query, (error, result) =>{
         if(error){
             console.log(error);
@@ -57,7 +57,7 @@ app.post('/login-action', (req, res) => {
 
 // 유저 회원가입 처리
 app.post('/signup-action', (req, res) => {
-    const query = `INSERT INTO USER(user_name, user_id, user_password, created_date) VALUES ( '${req.body.user.userName}','${req.body.user.userId}','${req.body.user.userPassword}',NOW())`;
+    const query = `INSERT INTO USER(user_name, user_id, user_password, create_date) VALUES ( '${req.body.user.userName}','${req.body.user.userId}','${req.body.user.userPassword}',NOW())`;
     connection.query(query, (error) => {
         // 쿼리 날릴 때 에러 발생하면
         if(error){

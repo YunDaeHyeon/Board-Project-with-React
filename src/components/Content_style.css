@@ -6,3 +6,68 @@
 	box-shadow: 10px 10px 30px rgba(0, 0, 0, 0.1);
 	border-radius: 20px;
 }
+
+.dashboard_container section.dashboard_section{
+	width: 100%;
+	height: 75%;
+	border: 2px solid red;
+}
+
+/* table Styles */
+.dashboard_container section.dashboard_section table.dashboard_table{
+	width: 100%;
+	border-collapse: collapse;
+	text-align: left;
+	line-height: 1.5;
+}
+
+.dashboard_container section.dashboard_section table.dashboard_table 
+thead th{
+	padding: 10px;
+	font-weight: bold;
+	vertical-align: top;
+	color: #000;
+	border-bottom: 3px solid #392f31;
+}
+
+/* 게시글 아이디 */
+.dashboard_container section.dashboard_section table.dashboard_table 
+thead th.board_no{
+	width: 5%;
+}
+
+/* 게시글 제목 */
+.dashboard_container section.dashboard_section table.dashboard_table 
+thead th.board_title{
+	width: 55%;
+}
+
+/* 게시글 작성자 */
+.dashboard_container section.dashboard_section table.dashboard_table 
+thead th.board_writer{
+	width: 10%;
+}
+
+/* 게시글 등록일 */
+.dashboard_container section.dashboard_section table.dashboard_table 
+thead th.board_create_date{
+	width: 15%;
+}
+
+/* 게시글 조회수 */
+.dashboard_container section.dashboard_section table.dashboard_table 
+thead th.board_views{
+	width: 7.5%;
+}
+
+/* 게시글 파일 유무 */
+.dashboard_container section.dashboard_section table.dashboard_table 
+thead th.board_filecheck{
+	width: 7.5%;
+}
+
+.dashboard_container section.dashboard_section table.dashboard_table tbody td{
+	padding: 10px;
+	vertical-align: top;
+	border-bottom: 1px solid #ccc;
+}
