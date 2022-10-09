@@ -24,16 +24,16 @@ function App() {
   return (
     <AuthProvider>
       <Routes>
-        <Route path="/" element={<Navigate to="/board/list"/>}/>
-        <Route path="/board" element={<Navigate to="/board/list"/>}/>
-        <Route 
-          path="/board"
-          replace={false}
-          element={<RequireAuth><Board/></RequireAuth>}>
-            <Route path="list" index element={<BoardList/>}/>
-            <Route path="write" element={<BoardWrite/>}/>
-            <Route path="edit" element={<BoardEdit/>}/>
-        </Route>
+          <Route path="/" element={<Navigate to="/board/list"/>}/>
+          <Route path="/board" element={<Navigate to="/board/list"/>}/>
+          <Route 
+            path="/board"
+            replace={false}
+            element={<RequireAuth><Board/></RequireAuth>}>
+              <Route path="list" index element={<BoardList/>}/>
+              <Route path="write" element={<BoardWrite/>}/>
+              <Route path="edit" element={<BoardEdit/>}/>
+          </Route>
         <Route path="/login" element={<Login/>}/>
         <Route path="/register" element={<Register/>}/>
         <Route path="*" element={<NotFound/>}/>

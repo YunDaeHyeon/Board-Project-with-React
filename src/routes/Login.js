@@ -8,7 +8,7 @@ import './Login_style.css'
 import { useAuth } from '../authentication/auth';
 
 function Login() {
-    const { login } = useAuth(); // 권환 제어 커스텀 훅 호출
+    const auth = useAuth(); // 권환 제어 커스텀 훅 호출
     const navigate = useNavigate(); // 사용자 위치 파악
     const [id, setId] = useState('');
     const [pwd, setPwd] = useState('');
@@ -25,11 +25,11 @@ function Login() {
         setId('');
         setPwd('');
     }
-
+    
     // 로그인 버튼 클릭 이벤트
     const onSignInClick = async(e) => {
         e.preventDefault();
-        const response = await axios.post('http://192.168.35.47:5000/login-action', { id, pwd });
+        const response = await axios.post(`http://${auth.serverIP}:5000/login-action`, { id, pwd });
         if(response.data === 'failure'){
             alert('로그인 실패');
             idInput.current.focus(); // id input에 포커스 지정
@@ -39,7 +39,7 @@ function Login() {
             onReset(e);
         }else if(Object.keys(response.data).length !== 0){
             alert('로그인 성공');
-            login(response.data); // object 형태로 전송
+            auth.login(response.data); // object 형태로 전송
             onReset(e);
             // 로그인 성공 시 메인 페이지 이동
             navigate(`/board`);

@@ -1,9 +1,12 @@
 import { useState, useRef } from 'react';
-import { Link } from 'react-router-dom';
 import axios from 'axios'; // HTTP 비동기 통신 라이브러리
+import { Link, useNavigate } from 'react-router-dom';
 import './Register_style.css';
+import { useAuth } from '../authentication/auth';
 
 function Register() {
+    const navigate = useNavigate();
+    const auth = useAuth();
     const [user, setUser] = useState({
         userName : '',
         userId : '',
@@ -45,11 +48,16 @@ function Register() {
                 passwordInput.current.focus(); // password input에 포커스 지정
                 e.preventDefault();
             }else{
-                onReset(e);
-                // e.preventDefault(); // submit 발생 시 reloading 막기
-                alert('회원가입 되었습니다!');
-                const request = await axios.post('http://192.168.35.47:5000/signup-action', {user});
-                console.log("요청 데이터 : ",request.data);
+                e.preventDefault();
+                const request = await axios.post(`http://${auth.serverIP}:5000/signup-action`, {user});
+                console.log(request.data);
+                if(request.data === 'error'){
+                    alert('데이터를 저장하는 중 오류가 발생하였습니다.');
+                }else if(request.data === 'success'){
+                    onReset();
+                    alert('회원가입 되었습니다!');
+                    navigate('/login');
+                }
             }
         }
     }
@@ -110,11 +118,9 @@ function Register() {
                             onChange={onInputChange}
                         />
                     </div>
-                    <Link to="/login">
-                        <button 
-                            className='register_btn' onClick={onSignUpClick}>SIGN UP
-                        </button>
-                    </Link>
+                    <button 
+                        className='register_btn' onClick={onSignUpClick}>SIGN UP
+                    </button>
                 </form>
             </section>
         </div>

@@ -16,7 +16,7 @@ section.dashboard_section table.dashboard_table
 thead th{
 	padding: 10px;
 	font-weight: bold;
-	vertical-align: top;
+	vertical-align: middle;
 	color: #000;
 	border-bottom: 3px solid #392f31;
 }
@@ -27,10 +27,16 @@ thead th.board_no{
 	width: 5%;
 }
 
+/* 게시글 이미지 */
+section.dashboard_section table.dashboard_table 
+thead th.board_image{
+    width: 5%
+}
+
 /* 게시글 제목 */
 section.dashboard_section table.dashboard_table 
 thead th.board_title{
-	width: 55%;
+	width: 57.5%;
 }
 
 /* 게시글 작성자 */
@@ -51,15 +57,9 @@ thead th.board_views{
 	width: 7.5%;
 }
 
-/* 게시글 파일 유무 */
-section.dashboard_section table.dashboard_table 
-thead th.board_filecheck{
-	width: 7.5%;
-}
-
 section.dashboard_section table.dashboard_table tbody td{
 	padding: 10px;
-	vertical-align: top;
+	vertical-align: middle;
 	border-bottom: 1px solid #ccc;
 }
 

@@ -24,8 +24,9 @@ function Board(){
                 <div className="section_wrap">
                     <article className="user_container">
                         <User
-                            userName={session[0].user_name}
+                            userNo={session[0].user_no}
                             userId={session[0].user_id}
+                            userName={session[0].user_name}
                             userRole={session[0].user_role}/>
                     </article>
                     <div className="content_container">

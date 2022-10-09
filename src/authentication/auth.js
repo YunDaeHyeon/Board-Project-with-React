@@ -1,10 +1,11 @@
 
 import { useState, createContext, useContext } from 'react';
-
 const AuthContext = createContext(null);
 
 // 권한 설정 컴포넌트(외부 접근 방지 모듈)
 export const AuthProvider = ({children}) => {
+    // 서버 IP 주소 설정
+    const serverIP = "192.168.35.47";
     const [user, setUser] = useState({});
 
     // 로그인
@@ -19,7 +20,7 @@ export const AuthProvider = ({children}) => {
     };
 
     return(
-        <AuthContext.Provider value={{user, login, logout}}>
+        <AuthContext.Provider value={{user, login, logout, serverIP}}>
             {children}
         </AuthContext.Provider>
     )

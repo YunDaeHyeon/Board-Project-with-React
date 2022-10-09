@@ -23,4 +23,5 @@ yarn-debug.log*
 yarn-error.log*
 
 # server and databases
-/server/database.js
+src/server/database.js
+src/server/uploads
