@@ -1,18 +1,24 @@
 import User from "../components/User";
 import Navigation from "../components/Navigation";
 import "./Board_style.css";
-import { Outlet } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 
 function Board(){
+    const navigate = useNavigate();
     const session = JSON.parse(sessionStorage.getItem('user'));
+
+    const onBoardListMoveHandler = () => {
+        navigate('/board/list');
+    }
+    
     return (
         <div className="main_container">
         <header>
             <div className="header_container">
-                <h1><p>To do List</p></h1>
+                <h1><p>게시판</p></h1>
                 <ul className="navigation_main_bar">
-                    <li><p>To do</p></li>
-                    <li><p>Weather</p></li>
+                    <li><p onClick={onBoardListMoveHandler}>게시판</p></li>
+                    <li><p>회원</p></li>
                     <li><p>Map</p></li>
                 </ul>
                 <Navigation/>
@@ -20,7 +26,6 @@ function Board(){
         </header>
         <section>
             <div className="section_container">
-                <h1 className="title">메인 페이지</h1>
                 <div className="section_wrap">
                     <article className="user_container">
                         <User
@@ -31,6 +36,7 @@ function Board(){
                     </article>
                     <div className="content_container">
                         <div className="dashboard_container">
+                            <h1 className="title">메인 페이지</h1>
                             <Outlet/>
                         </div>
                     </div>

@@ -79,8 +79,8 @@ function BoardWrite(){
             onBackButtonSuccess, // '예' 눌렀을 시
             onBackButtonCancle // '아니요' 눌렀을 시
         );
-            //"onWritingHandler : 글쓰기 취소"
-    const onWritingButtonCancle = () => { console.log(write)};
+
+    const onWritingButtonCancle = () => { console.log("onWritingHandler : 글쓰기 취소")};
     const onWritingButtonSuccess = async () => {
         let formData = new FormData();
         // http의 body는 object가 아닌 json으로 받기에 객체를 json 형식으로 변경하여 전송해야한다.
@@ -163,7 +163,7 @@ function BoardWrite(){
                     </div>
                 </div>
                 <div className="handler_button_group">
-                    <button type="button" className="backButton" onClick={onBackButtonHandler}>취소</button>
+                    <button type="button" className="backButton" onClick={onBackButtonHandler}>뒤로가기</button>
                     <button type="button" className="addButton" onClick={onWritingHandler}>완료</button>        
                 </div>
             </form>

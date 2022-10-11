@@ -5,7 +5,8 @@ const path       = require('path');
 const dbconfig   = require('./database.js')();
 const cors       = require('cors'); // cors 사용
 const bodyParser = require('body-parser'); // bady-parser 사용
-const app        = express(); // express 모듈 불러오기\
+const app        = express(); // express 모듈 불러오기
+const moment     = require('moment'); // 서버 한국 시간 설정
 const connection = dbconfig.init(); // DB 연결
 
 let imageName = ""; // 이미지 이름을 사용하기 위한 변수
@@ -101,6 +102,28 @@ app.get('/board-reading-action', (req, res) =>{
             }
         }
     })
+});
+
+// 상세 글 불러오기
+app.post('/board-datils-action', (req, res) => {
+    // boardNo은 INT이지만 string으로 넘어오기에 parseInt를 사용하여 INT으로 바꿔야한다.
+    const boardNo = parseInt(req.body.boardNo);
+    const viewCountQuery = `UPDATE BOARD SET board_views = board_views + 1 WHERE board_no = ${boardNo}; `;
+    const query = `SELECT board_no, user_no, board_title, board_content, board_image, board_writer, board_date, board_views FROM BOARD WHERE board_no = ${boardNo} AND board_state = 1; `;
+    connection.query(viewCountQuery+query, (error, result) =>{
+        if(error){
+            console.log("불러오기 실패", error);
+            res.send('error');
+        }else{
+            if(result[1].length !== 0){
+                console.log("게시글 상세 정보 불러오기 성공");
+                res.send(result[1]);
+            }else{
+                console.log("게시글이 존재하지 않습니다.");
+                res.send('boardDetilasNULL');
+            }
+        }
+    }) 
 });
 
 // 글쓰기 액션 처리

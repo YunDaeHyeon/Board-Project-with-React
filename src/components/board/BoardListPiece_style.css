@@ -1,8 +1,13 @@
+/* react에서 Link 컴포넌트는 css에서 a 태그이다. */
+tr td a{
+    color: #000000;
+    text-decoration: none;
+}
+
 tr td.boardImage_container img.boardImage_box{
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
     width: 50px;
     height: 50px;
-    border: 1px solid red;
 }

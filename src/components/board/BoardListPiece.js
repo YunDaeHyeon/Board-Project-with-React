@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import { useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import "./BoardListPiece_style.css"
 /*
     board.board_date.replace('T', ' ').substring(0,19)
@@ -8,21 +8,30 @@ import "./BoardListPiece_style.css"
 */
 
 function BoardListPiece({boardNo, boardImage, boardTitle, boardWriter, boardDate, boardViews}){
-
+    let date = new Date(boardDate); // ISO -> Object
+    date.setHours(date.getHours() + 9) // Object -> '시간' KCT + 9
+    boardDate = date.toISOString().replace('T', ' ').substring(0, 16); // T, 000Z => KR
+    let date1 = boardDate.substring(0, 11);
+    let date2 = boardDate.substring(11, 16);
     return(
         <tr>
             <td>{boardNo}</td>
             <td className='boardImage_container'>
                 <img 
                     className='boardImage_box'
-                    src={ // boardImage가 존재하면 경로 지정, 없으면 null 반환
-                        boardImage ? require(`../../server/uploads/${boardImage}`) : null
+                    src={ // boardImage가 존재하면 경로 지정, 없으면 empty_image (빈 사진) 반환
+                        boardImage ? require(`../../server/uploads/${boardImage}`) : 
+                        require('../../images/empty_image.png')
                     }
+                    alt=""
                     />
             </td>
-            <td>{boardTitle}</td>
+            <td><Link to={`/board/details/${boardNo}`}>{boardTitle}</Link></td>
             <td>{boardWriter}</td>
-            <td>{boardDate.replace('T', ' ').substring(0,19)}</td>
+            <td>
+                <p>{date1}</p>
+                <p>{date2}</p> 
+            </td>
             <td>{boardViews}</td>
         </tr>
     );

@@ -12,6 +12,7 @@ import RequireAuth from "./authentication/RequireAuth";
 import BoardList from "./components/board/BoardList";
 import BoardWrite from "./components/board/BoardWrite";
 import BoardEdit from "./components/board/BoardEdit";
+import BoardDetails from "./components/board/BoardDetails";
 
 /*
   사용자 인증 없이 접근 가능한 컴포넌트
@@ -31,6 +32,7 @@ function App() {
             replace={false}
             element={<RequireAuth><Board/></RequireAuth>}>
               <Route path="list" index element={<BoardList/>}/>
+              <Route path="details/:boardNo" index element={<BoardDetails/>}/>
               <Route path="write" element={<BoardWrite/>}/>
               <Route path="edit" element={<BoardEdit/>}/>
           </Route>
