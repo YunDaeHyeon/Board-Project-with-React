@@ -9,7 +9,7 @@ const useConfirm = (message = "", onConfirm, onCancel) => {
     if (!onConfirm || typeof onConfirm !== "function") { 
         return; // 매개변수 onConfirm가 없거나 onConfirm이 함수가 아나라면 return 실행
     }
-    if (onCancel && typeof onCancel !== "function") { // onCancle은 필수요소는 아님
+    if (!onCancel || typeof onCancel !== "function") { // onCancle은 필수요소는 아님
         return;
     }
 
@@ -45,6 +45,7 @@ function BoardWrite(){
             boardContent: '', // 글 내용
             boardWriter: `${session[0].user_name}`
         });
+        setImages('');
     }
 
     // 글쓰기 Input onChange
@@ -72,24 +73,24 @@ function BoardWrite(){
 
 
     const onBackButtonSuccess = () => { navigate('/board/list') };
-    const onBackButtonCancle = () => { console.log("onBackButtonHandler : 취소(아니오)")};
+    const onBackButtonCancel = () => { console.log("onBackButtonHandler : 취소(아니오)")};
     const onBackButtonHandler = 
         useConfirm(
             "취소하시겠습니까?",
             onBackButtonSuccess, // '예' 눌렀을 시
-            onBackButtonCancle // '아니요' 눌렀을 시
+            onBackButtonCancel // '아니요' 눌렀을 시
         );
 
-    const onWritingButtonCancle = () => { console.log("onWritingHandler : 글쓰기 취소")};
+    const onWritingButtonCancel = () => { console.log("onWritingHandler : 글쓰기 취소")};
     const onWritingButtonSuccess = async () => {
         let formData = new FormData();
         // http의 body는 object가 아닌 json으로 받기에 객체를 json 형식으로 변경하여 전송해야한다.
         formData.append("write", JSON.stringify(write));
         formData.append("image", images[0]);
-        const request = await axios.post(`http://${auth.serverIP}:5000/board-writing-action`, formData);//iconv-lite
-            if(request.data === 'error'){
+        const response = await axios.post(`http://${auth.serverIP}:5000/board-writing-action`, formData);//iconv-lite
+            if(response.data === 'error'){
                 alert('데이터를 저장하는 중 오류가 발생하였습니다.');
-            }else if(request.data === 'success'){
+            }else if(response.data === 'success'){
                 onReset();
                 alert('성공적으로 저장하였습니다!');
                 navigate('/board/list');
@@ -99,7 +100,7 @@ function BoardWrite(){
             useConfirm(
                 "작성하시겠습니까?",
                 onWritingButtonSuccess, // '예' 눌렀을 시
-                onWritingButtonCancle, // '아니요' 눌렀을 시
+                onWritingButtonCancel, // '아니요' 눌렀을 시
             );
 
     // 이미지가 선택될 때 실행

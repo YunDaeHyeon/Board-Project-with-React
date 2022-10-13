@@ -42,7 +42,7 @@ function Login() {
             auth.login(response.data); // object 형태로 전송
             onReset(e);
             // 로그인 성공 시 메인 페이지 이동
-            navigate(`/board`);
+            navigate(`/board/list`);
         }
     };
     return (

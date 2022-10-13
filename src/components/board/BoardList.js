@@ -48,6 +48,7 @@ function BoardList(){
         }
         fetchData();
     }, [auth.serverIP]);
+    
     return(
         <>
             <section className="dashboard_section">
