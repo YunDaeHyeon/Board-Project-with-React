@@ -3,6 +3,25 @@ import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useAuth } from "../../authentication/auth";
 
+// 예, 아니요 판별 다이얼로그 (confirm)
+const useConfirm = (message = "", onConfirm, onCancel) => {
+    if (!onConfirm || typeof onConfirm !== "function") { 
+        return; // 매개변수 onConfirm가 없거나 onConfirm이 함수가 아나라면 return 실행
+    }
+    if (!onCancel || typeof onCancel !== "function") { // onCancle은 필수요소는 아님
+        return;
+    }
+
+    const confirmAction = () =>{
+        if(window.confirm(message)){
+            onConfirm();
+        }else{
+            onCancel();
+        }
+    }
+    return confirmAction;
+};
+
 function BoardDetails(){
     const auth = useAuth();
     const navigate = useNavigate();
@@ -54,12 +73,38 @@ function BoardDetails(){
 
     // 수정하기 Handler
     const onBoardEditHandler = () => {
-
+        // /board/edit으로 prop 넘기기 (URL 매핑)
+        navigate('/board/edit', {
+            state:{
+                board : boardDetail,
+            }
+        });
     }
-    // 삭제하기 Handler
-    const onBoardDeleteHandler = () => {
 
-    };
+    // '예' 누르면 
+    const onBoardDeleteSuccess = async () => {
+        const response = await axios.post(
+            `http://${auth.serverIP}:5000/board-deleting-action`,
+            { 
+                board_no : boardDetail.board_no,
+                board_image : boardDetail.board_image
+            }
+        );
+        if(response.data === 'error'){
+            alert("서버 오류");
+        }else if(response.data === 'success'){
+            alert("삭제되었습니다!");
+            navigate('/board/list');
+        }
+    }
+    // '아니요' 누르면
+    const onBoardDeletecancel = () => {console.log("onBoardDeleteHandler : 글 삭제 취소");}
+    // 삭제하기 Handler
+    const onBoardDeleteHandler = useConfirm(
+        "삭제하시겠습니까?",
+        onBoardDeleteSuccess,
+        onBoardDeletecancel
+    )
     
     return(
         <div>
@@ -76,7 +121,7 @@ function BoardDetails(){
                                     style={{width:500, height: 500, backgroundRepeat: "no-repeat"}}
                                     src={ // boardImage가 존재하면 경로 지정, 없으면 empty_image (빈 사진) 반환
                                         require(`../../server/uploads/${boardDetail.board_image}`) }
-                                    alt=""
+                                    alt="img"
                                     />
                             ) : null
                         }

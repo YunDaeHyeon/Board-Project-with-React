@@ -6,11 +6,10 @@ const dbconfig   = require('./database.js')();
 const cors       = require('cors'); // cors 사용
 const bodyParser = require('body-parser'); // bady-parser 사용
 const app        = express(); // express 모듈 불러오기
-const moment     = require('moment'); // 서버 한국 시간 설정
 const connection = dbconfig.init(); // DB 연결
 
-let imageName = ""; // 이미지 이름을 사용하기 위한 변수
-
+let writeImageName = ""; // 이미지 이름을 사용하기 위한 변수
+let editImageName = ""; // 이미지 이름을 사용하기 위한 변수
 // configuration 
 // React 클라이언트의 포트는 5000이므로 포트 분리
 app.set('port', process.env.PORT || 5000);
@@ -19,28 +18,43 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use(cors());
 app.use(bodyParser.json());
 
-fs.readdir('uploads', (error) =>{
-    // uploads 폴더 없으면 생성
-    if(error){
-        fs.mkdirSync('uploads');
-    }
-})
+const directory = fs.existsSync("./src/server/uploads");
+if(!directory) fs.mkdirSync("./src/server/uploads");
 
 // 이미지 업로드 처리(multer 모듈 사용)
-const upload = multer({
+const writeUpload = multer({
     // storage : 파일 저장 방식, 걍로, 파일 명, 사이즈 등 설정
     storage: multer.diskStorage({ // multer의 diskStorage를 통해 이미지가 서버 디스크에 저장되도록 지정
         destination(req, file, cb){ // disStorage의 destination 메소드로 저장 경로 지정
-            cb(null, 'uploads/'); // cb = callback
+            cb(null, './src/server/uploads/'); // cb = callback
         },
         filename(req, file, cb){ // 파일 이름은 filename 메서드 사용
             const board = JSON.parse(req.body.write);
             // 이미지 파일 명명 규칙
-            // 이미지 경로(uploads/+게시글 작성자(boardWriter) + 사용자 식별자(user_no) + 업로드 날짜(Data.now()) + 파일 확장자(path.extname)
+            // 이미지 경로(uploads) + 게시글 작성자(boardWriter) + 사용자 식별자(user_no) + 업로드 날짜(Data.now()) + 파일 확장자(path.extname)
             // ex) 저스틴12293848274827.png
             const ext = path.extname(file.originalname);
-            imageName = board.boardWriter+board.userNo+Date.now()+ext;
-            cb(null, imageName);
+            writeImageName = board.boardWriter+board.userNo+Date.now()+ext;
+            cb(null, writeImageName);
+        },
+    }),
+    limits: { fileSize: 5 * 1024 * 1024 }, // 최대 이미지 파일 용량 허용치
+})
+
+const editUpload = multer({
+    // storage : 파일 저장 방식, 걍로, 파일 명, 사이즈 등 설정
+    storage: multer.diskStorage({ // multer의 diskStorage를 통해 이미지가 서버 디스크에 저장되도록 지정
+        destination(req, file, cb){ // disStorage의 destination 메소드로 저장 경로 지정
+            cb(null, './src/server/uploads/'); // cb = callback
+        },
+        filename(req, file, cb){ // 파일 이름은 filename 메서드 사용
+            const board = JSON.parse(req.body.edit);
+            // 이미지 파일 명명 규칙
+            // 이미지 경로(uploads) + 게시글 작성자(boardWriter) + 사용자 식별자(user_no) + 업로드 날짜(Data.now()) + 파일 확장자(path.extname)
+            // ex) 저스틴12293848274827.png
+            const ext = path.extname(file.originalname);
+            editImageName = board.boardWriter+board.userNo+Date.now()+ext;
+            cb(null, editImageName);
         },
     }),
     limits: { fileSize: 5 * 1024 * 1024 }, // 최대 이미지 파일 용량 허용치
@@ -127,9 +141,9 @@ app.post('/board-datils-action', (req, res) => {
 });
 
 // 글쓰기 액션 처리
-app.post('/board-writing-action', upload.single('image'), (req, res, next) =>{
+app.post('/board-writing-action', writeUpload.single('image'), (req, res, next) =>{
     const board = JSON.parse(req.body.write);
-    let query = `INSERT INTO BOARD(user_no, board_title, board_content, board_image, board_writer, board_date) VALUES (${board.userNo},'${board.boardTitle}','${board.boardContent}','${imageName}','${board.boardWriter}',NOW())`;
+    let query = `INSERT INTO BOARD(user_no, board_title, board_content, board_image, board_writer, board_date) VALUES (${board.userNo},'${board.boardTitle}','${board.boardContent}','${writeImageName}','${board.boardWriter}',NOW())`;
     if(!req.file){ // 사진이 첨부되어있지 않으면
         query =  `INSERT INTO BOARD(user_no, board_title, board_content, board_writer, board_date) VALUES (${board.userNo},'${board.boardTitle}','${board.boardContent}','${board.boardWriter}',NOW())`;
     }
@@ -144,6 +158,62 @@ app.post('/board-writing-action', upload.single('image'), (req, res, next) =>{
         }
     })
 });
+
+/*
+    1 case : 이미지가 있는 글(board.board_image)을 다른 이미지로 변경
+    2 case : 이미지가 없는 글을 이미지 추가
+    3 case : 이미지 없는 글 이미지 없음
+    4 case : 이미지 있는 글(board.board_image) 이미지 변경 X
+*/
+
+// 글 수정 액션 처리
+app.post('/board-editing-action', editUpload.single('image'), (req, res, next) => {
+    const board = JSON.parse(req.body.edit);
+    // 사진이 첨부되어 있으면 (이미지가 없는 글에 이미지 추가 O)
+    let query = `UPDATE BOARD SET board_title = '${board.boardTitle}', board_content = '${board.boardContent}', board_image = '${editImageName}' WHERE board_no = '${board.boardNo}'`;
+    if(!req.file){ // 사진이 첨부되어 있지 않으면 (이미지가 있는 글에 이미지 변경 X, 이미지가 없는 글에 이미지 추가 X)
+        query = `UPDATE BOARD SET board_title = '${board.boardTitle}', board_content = '${board.boardContent}' WHERE board_no = '${board.boardNo}'`;
+    }else if(board.boardImage && req.file){ // 이미지가 있는 글에 다른 이미지로 변경 (기존 이미지 삭제)
+        fs.unlink(`./src/server/uploads/${board.boardImage}`, error => {
+            if(error){ // 해당 파일이 존재하지 않을 경우(= 이미지가 없다가 새로 추가한 글)
+                console.log("존재하지 않는 이미지입니다.");
+            }else{
+                console.log("이미지 삭제 성공"); // 이미지를 변경하면, 기존의 이미지는 삭제되어야함
+            }
+        });
+    }
+    // 쿼리 실행
+    connection.query(query,(error) => {
+        if(error){
+            console.log("글 수정 실패", error);
+            res.send('error');
+        }else{
+            console.log("글 수정 성공");
+            res.send('success');
+        }
+    });
+});
+
+// 글 삭제 액션 처리
+app.post('/board-deleting-action', (req, res) => {
+    fs.unlink(`./src/server/uploads/${req.body.board_image}`, error => {
+        if(error){ // 해당 파일이 존재하지 않을 경우
+            console.log("이미지가 존재하지 않는 게시글입니다.");
+        }else{
+            console.log("이미지 삭제 성공");
+        }
+    });
+    const query = `DELETE FROM BOARD WHERE board_no = ${req.body.board_no}`;
+    connection.query(query, (error)=>{
+        if(error){
+            console.log("글 삭제 실패",error);
+            res.send('error');
+        }else{
+            console.log("글 삭제 성공");
+            res.send('success');
+        }
+    })
+})
 
 app.listen(app.get('port'), () => {
     console.log('포트 넘버 : ' + app.get('port') + "에서 실행 중");
