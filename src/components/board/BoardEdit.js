@@ -168,14 +168,13 @@ function BoardEdit(){
                         <p>미리보기</p>
                         {
                             !images ? (
-                                <div className="image_empty_box">
-                                    <img
-                                    src={
-                                        edit.boardImage !== null ? require(`../../server/uploads/${edit.boardImage}`) : 
-                                        require('../../images/empty_image.png')
-                                    }
-                                    alt="img"/>
-                                </div>
+                                <img
+                                className="image_container"
+                                src={
+                                    edit.boardImage !== null ? require(`../../server/uploads/${edit.boardImage}`) : 
+                                    require('../../images/empty_image.png')
+                                }
+                                alt="img"/>
                             ) : (
                                 <div className="image_box"></div>
                             )

@@ -19,7 +19,6 @@ function Board(){
                 <ul className="navigation_main_bar">
                     <li><p onClick={onBoardListMoveHandler}>게시판</p></li>
                     <li><p>회원</p></li>
-                    <li><p>Map</p></li>
                 </ul>
                 <Navigation/>
             </div>

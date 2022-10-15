@@ -15,6 +15,7 @@ function BoardListPiece({boardNo, boardImage, boardTitle, boardWriter, boardDate
     let date1 = boardDate.substring(0, 11);
     let date2 = boardDate.substring(11, 16);
     console.log(boardImage);
+    
     return(
         <tr>
             <td>{boardNo}</td>

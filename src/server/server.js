@@ -57,7 +57,7 @@ const editUpload = multer({
             cb(null, editImageName);
         },
     }),
-    limits: { fileSize: 5 * 1024 * 1024 }, // 최대 이미지 파일 용량 허용치
+    limits: { fileSize: 5 * 1024 * 1024 * 1024 }, // 최대 이미지 파일 용량 허용치
 })
 
 // routing (매핑)

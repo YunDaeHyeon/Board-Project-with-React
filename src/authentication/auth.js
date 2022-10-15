@@ -5,7 +5,7 @@ const AuthContext = createContext(null);
 // 권한 설정 컴포넌트(외부 접근 방지 모듈)
 export const AuthProvider = ({children}) => {
     // 서버 IP 주소 설정
-    const serverIP = "172.20.10.7";
+    const serverIP = "192.168.35.47";
     const [user, setUser] = useState({});
 
     // 로그인
