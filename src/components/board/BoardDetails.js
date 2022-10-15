@@ -2,6 +2,7 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useAuth } from "../../authentication/auth";
+import "./BoardDetails_style.css";
 
 // 예, 아니요 판별 다이얼로그 (confirm)
 const useConfirm = (message = "", onConfirm, onCancel) => {
@@ -112,33 +113,41 @@ function BoardDetails(){
                 loading ? (
                     <h1>Loading...</h1>
                 ) : (
-                    <div>
-                        <p>{boardDetail.board_no}</p>
-                        <p style={{marginBottom:30}}>{`제목 : ${boardDetail.board_title}`}</p><hr style={{marginBottom:30}}/>
-                        {
-                            boardDetail.board_image ? (
-                                <img 
-                                    style={{width:500, height: 500, backgroundRepeat: "no-repeat"}}
-                                    src={ // boardImage가 존재하면 경로 지정, 없으면 empty_image (빈 사진) 반환
-                                        require(`../../server/uploads/${boardDetail.board_image}`) }
-                                    alt="img"
-                                    />
-                            ) : null
-                        }
-                        <p>{boardDetail.board_content}</p>
-                        <p>{boardDetail.board_writer}</p>
-                        <p>{(boardDetail.board_date).replace('T', ' ').substring(0,19)}</p>
-                        <p>{boardDetail.board_views}</p>
-                        <div>
-                            <button className="backButton" onClick={onBackPageHandler}>뒤로가기</button>
-                            {   // 해당 게시글의 작성자라면
-                                session[0].user_no === boardDetail.user_no ? (
-                                    <>
-                                        <button className="boardEditButton" onClick={onBoardEditHandler}>수정</button>
-                                        <button className="boardDeleteButton" onClick={onBoardDeleteHandler}>삭제</button>
-                                    </>
-                                ) : null
-                            }
+                    <div className="board-detail-container">
+                        <header className="board-detail-header">
+                            <p className="detail-no">{`No : ${boardDetail.board_no}`}</p>
+                            <p className="detail-writer">{`작성자 : ${boardDetail.board_writer}`}</p>
+                            <p className="detail-date">{`등록일 : ${(boardDetail.board_date).replace('T', ' ').substring(0,19)}`}</p>
+                            <p className="detail-views">{`조회수 : ${boardDetail.board_views}`}</p>
+                        </header>
+                        <p className="detail-title">{`제목 : ${boardDetail.board_title}`}</p>
+                        <div className="board-detail-content-container">
+                            <div className="detail-content">
+                                <p>{boardDetail.board_content}</p>
+                            </div>
+                            <div className="detail-image">
+                                {
+                                    boardDetail.board_image ? (
+                                        <img
+                                            className="image-box"
+                                            src={ // boardImage가 존재하면 경로 지정, 없으면 empty_image (빈 사진) 반환
+                                                require(`../../server/uploads/${boardDetail.board_image}`) }
+                                            alt="img"
+                                            />
+                                    ) : null
+                                }
+                            </div>
+                        </div>
+                        <div className="button_group">
+                                <button className="backButton" onClick={onBackPageHandler}>뒤로가기</button>
+                                {   // 해당 게시글의 작성자라면
+                                    session[0].user_no === boardDetail.user_no ? (
+                                        <div className="authButton">
+                                            <button className="boardEditButton" onClick={onBoardEditHandler}>수정</button>
+                                            <button className="boardDeleteButton" onClick={onBoardDeleteHandler}>삭제</button>
+                                        </div>
+                                    ) : null
+                                }
                         </div>
                     </div>
                 )

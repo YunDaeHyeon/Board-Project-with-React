@@ -133,7 +133,7 @@ function BoardWrite(){
 
     return(
         <div className="write_container">
-            <h1>BoardWrite</h1>
+            <h2>글 작성</h2>
             <form>
                 <div className="write_view_container">
                     <div className="write_contentView_container">
@@ -159,8 +159,10 @@ function BoardWrite(){
                         <p>미리보기</p>
                         <div className="image_box"></div>
                         {/* accept="image/*"는 이미지 파일만 업로드 가능 */}
-                        <label htmlFor="image">이미지 업로드</label>
-                        <input id="image" name="image" type="file" accept="image/*" onChange={onUpLoadImage}/>
+                        <div>
+                            <label htmlFor="image">이미지 업로드</label>
+                            <input id="image" name="image" type="file" accept="image/*" onChange={onUpLoadImage}/>
+                        </div>
                     </div>
                 </div>
                 <div className="handler_button_group">

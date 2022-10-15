@@ -3,6 +3,12 @@
 	height: 75%;
 }
 
+.dashboard_container section.dashboard_section td.board-is-null{
+	font: 20px/2 "arial";
+	justify-items: center;
+	text-align: center;
+}
+
 /* table Styles */
 section.dashboard_section table.dashboard_table{
 	width: 100%;

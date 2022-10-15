@@ -36,7 +36,6 @@ function Board(){
                     </article>
                     <div className="content_container">
                         <div className="dashboard_container">
-                            <h1 className="title">메인 페이지</h1>
                             <Outlet/>
                         </div>
                     </div>

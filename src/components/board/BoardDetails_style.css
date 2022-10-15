@@ -1,0 +1,104 @@
+div.board-detail-container{
+    width: 100%;
+    height: 100%;
+}
+
+div.board-detail-container header.board-detail-header{
+    width: 100%;
+    height: 100%;
+    margin-bottom: 15px;
+    display: flex;
+    border-bottom: 3px solid #392f31;
+}
+
+div.board-detail-container header.board-detail-header 
+p{
+    font: 16px/2 "arial";
+    color: #666;
+}
+
+div.board-detail-container header.board-detail-header 
+p.detail-no{
+    flex: 1;
+}
+
+div.board-detail-container header.board-detail-header 
+p.detail-writer{
+    flex: 2;
+}
+
+div.board-detail-container header.board-detail-header 
+p.detail-date{
+    flex: 2;
+}
+
+div.board-detail-container header.board-detail-header 
+p.detail-views{
+    flex: 1;
+}
+
+div.board-detail-container p.detail-title{
+    font: 18px "arial";
+    border-bottom: 1px solid #392f31;
+    justify-content: center;
+}
+
+div.board-detail-container div.board-detail-content-container{
+    width: 100%;
+    height: 100%;
+    margin-top: 20px;
+    justify-content: space-between;
+    border-bottom: 1px solid #392f31;
+    display: flex;
+}
+
+div.board-detail-container div.board-detail-content-container div.detail-content p{
+    width: 30vw;
+    height: 40vh;
+    margin: 20px;
+    font: 17px/1 "arial";
+    flex: 2;
+    word-wrap: break-word;
+}
+
+div.board-detail-container div.board-detail-content-container div.detail-image{
+    width: 30vw;
+    height: 40vh;
+    margin: 20px;
+    flex: 1;
+    display: grid;
+    place-items: center;
+}
+
+div.board-detail-container div.board-detail-content-container div.detail-image img.image-box{
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    width: 50%;
+    height: 80%;
+}
+
+div.board-detail-container div.button_group{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+div.board-detail-container div.button_group button{
+    width: 100px;
+    height: 34px;
+    border-radius: 30px;
+    background-color: #8F7245;
+    color: #fff;
+    font-size: 15px;
+    text-align: center;
+    cursor: pointer;
+	margin-top: 20px;
+	box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.2);
+}
+
+div.board-detail-container div.button_group button.boardDeleteButton{
+    margin-left: 20px;
+    margin-right: 20px;
+}

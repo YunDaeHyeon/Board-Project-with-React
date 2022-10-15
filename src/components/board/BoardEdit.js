@@ -142,7 +142,7 @@ function BoardEdit(){
 
     return(
         <div className="edit_container">
-            <h1>BoardEdit</h1>
+            <h2>글 수정</h2>
             <form>
                 <div className="edit_view_container">
                     <div className="edit_contentView_container">
@@ -168,21 +168,23 @@ function BoardEdit(){
                         <p>미리보기</p>
                         {
                             !images ? (
-                                <img
-                                style={{width:300, height: 300, backgroundRepeat: "no-repeat"}}
-                                src={
-                                    edit.boardImage !== null ? require(`../../server/uploads/${edit.boardImage}`) : 
-                                    require('../../images/empty_image.png')
-                                }
-                                alt="img"
-                                />
+                                <div className="image_empty_box">
+                                    <img
+                                    src={
+                                        edit.boardImage !== null ? require(`../../server/uploads/${edit.boardImage}`) : 
+                                        require('../../images/empty_image.png')
+                                    }
+                                    alt="img"/>
+                                </div>
                             ) : (
                                 <div className="image_box"></div>
                             )
                         }
                         {/* accept="image/*"는 이미지 파일만 업로드 가능 */}
-                        <label htmlFor="image">이미지 업로드</label>
-                        <input id="image" name="image" type="file" accept="image/*" onChange={onUpLoadImage}/>
+                        <div>
+                            <label htmlFor="image">이미지 업로드</label>
+                            <input id="image" name="image" type="file" accept="image/*" onChange={onUpLoadImage}/>
+                        </div>
                     </div>
                 </div>
                 <div className="handler_button_group">
