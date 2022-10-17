@@ -22,3 +22,52 @@
     "urlencode": "^1.1.0",
     "web-vitals": "^2.1.4"
 ```
+---  
+22.10.17 기준 트리구조
+  
+```console
+src/
+├── App.js
+├── authentication/
+│   ├── RequireAuth.js
+│   └── auth.js
+├── components/
+│   ├── Navigation.js
+│   ├── Navigation_style.css
+│   ├── NotFound.js
+│   ├── User.js
+│   ├── User_style.css
+│   ├── board/
+│   │   ├── BoardDetails.js
+│   │   ├── BoardDetails_style.css
+│   │   ├── BoardEdit.js
+│   │   ├── BoardEdit_style.css
+│   │   ├── BoardList.js
+│   │   ├── BoardListPiece.js
+│   │   ├── BoardListPiece_style.css
+│   │   ├── BoardList_style.css
+│   │   ├── BoardWrite.js
+│   │   └── BoardWrite_style.css
+│   ├── map/
+│   │   └── MapContainer.js
+│   └── paginate/
+│       ├── BoardListPaginationAdapter.js
+│       ├── Pagination.js
+│       └── Pagination_style.css
+├── images/
+│   ├── backgroundImage.png
+│   ├── empty_image.png
+│   └── user.png
+├── index.js
+├── routes/
+│   ├── Board.js
+│   ├── Board_style.css
+│   ├── Login.js
+│   ├── Login_style.css
+│   ├── Register.js
+│   └── Register_style.css
+└── server/
+    ├── database.js (.gitignore)
+    ├── server.js
+    └── uploads/ (.gitignore)
+```
