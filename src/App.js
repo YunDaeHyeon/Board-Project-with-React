@@ -13,6 +13,7 @@ import BoardList from "./components/board/BoardList";
 import BoardWrite from "./components/board/BoardWrite";
 import BoardEdit from "./components/board/BoardEdit";
 import BoardDetails from "./components/board/BoardDetails";
+import MapContainer from "./components/map/MapContainer";
 
 /*
   사용자 인증 없이 접근 가능한 컴포넌트
@@ -35,6 +36,7 @@ function App() {
               <Route path="details/:boardNo" index element={<BoardDetails/>}/>
               <Route path="write" element={<BoardWrite/>}/>
               <Route path="edit" element={<BoardEdit/>}/>
+              <Route path="map" element={<MapContainer/>}/>
           </Route>
         <Route path="/login" element={<Login/>}/>
         <Route path="/register" element={<Register/>}/>
